@@ -23,6 +23,7 @@ def functionOf3(place,baseAddr,tokenAddr,dex):
             filtredResult.append({"pair":one["pair"],"base":tokenPlace})
             listWithoutMainPair.append(one)
 # getting the secondBaseAddr and the thirdPair
+    getInThirdFor = True
     for item in listWithoutMainPair:
         secondPair = item["pair"]
         if item["token0"] == tokenAddr:
@@ -30,9 +31,10 @@ def functionOf3(place,baseAddr,tokenAddr,dex):
         elif item["token1"] == tokenAddr:
             secondBaseAddr = item["token0"]
         # print(f"{baseAddr},{secondBaseAddr}")
-        for elem in allPairs:
-            if (elem["token0"] == secondBaseAddr or elem["token0"] == baseAddr) and (elem["token1"] == secondBaseAddr or elem["token1"] == baseAddr):
-                print(f"{mainPair},{secondPair},{elem['pair']}")
+        if getInThirdFor == True:
+            for elem in allPairs:
+                if (elem["token0"] == secondBaseAddr or elem["token0"] == baseAddr) and (elem["token1"] == secondBaseAddr or elem["token1"] == baseAddr):
+                    print(f"{mainPair},{secondPair},{elem['pair']}")
                 # print(elem)
     # print(filtredResult)
     # print("------------------------------------------------------------")
