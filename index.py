@@ -69,9 +69,11 @@ def funcFor3(place,baseAddr,tokenAddr,dex):
 # ________________________________________________________________________________________________________________________________________
     if mainPair:
         for line in data[tokenAddr]:
-            if (line["pair"] != mainPair) and (one["dex"] != dex and (one["token0"] == baseAddr or one["token0"] == tokenAddr) and (one["token1"] == baseAddr or one["token1"] == tokenAddr)):
+            if (line["pair"] == mainPair) or ((line["token0"] == baseAddr or line["token0"] == tokenAddr) and (line["token1"] == baseAddr or line["token1"] == tokenAddr)):
+                pass
+            else:
                 newList.append(line)
-    print(newList)
+    # print(newList)
 # __________________________________________________________________________________________________________________________________________
     for elem in newList:
         if elem["token0"] == tokenAddr:
@@ -108,11 +110,11 @@ def funcFor3(place,baseAddr,tokenAddr,dex):
             if place == "first":
                 test = mainPair,basePlace,secondPair,tokenPlace,item['pair'],thirdPairTokenPlace
                 result.append(test)
-                # print(f"{mainPair},{basePlace},{secondPair},{tokenPlace},{item['pair']},{thirdPairTokenPlace}")
+                print(f"{mainPair},{basePlace},{secondPair},{tokenPlace},{item['pair']},{thirdPairTokenPlace}")
             elif place == "last":
                 test = mainPair,basePlace,secondPair,tokenPlace,item['pair'],thirdPairTokenPlace
                 result.append(test)
-                # print(f"{mainPair},{basePlace},{secondPair},{tokenPlace},{item['pair']},{thirdPairTokenPlace}")
+                print(f"{mainPair},{basePlace},{secondPair},{tokenPlace},{item['pair']},{thirdPairTokenPlace}")
 # ____________________________________________________________________________________________________________________________________________
     
     # print(filtredResult)
