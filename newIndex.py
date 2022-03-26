@@ -19,8 +19,7 @@ def functionOf3(place,baseAddr,tokenAddr,dex):
         elif (one["token0"] == tokenAddr or one["token1"] == tokenAddr) and (one["token0"] != baseAddr and one["token1"] != baseAddr):
             
             listWithoutMainPair.append(one)
-# getting the secondBaseAddr and the thirdPair
-    # getInThirdFor = True
+# getting the secondBaseAddr and the thirdPair----------------------------------------------------------------------------------------------------------
     
     # thirdPair ----------------------------------------------------
     for item in listWithoutMainPair:
@@ -39,16 +38,15 @@ def functionOf3(place,baseAddr,tokenAddr,dex):
                     elif elem["token1"] == secondBaseAddr:
                         thirdBasePlace = 1
                     
-                    # totalPairList.append({"pair":secondPair ,"base":secondBasePlace})
+                    totalPairList.append(secondPair)
                     totalPairList.append(elem['pair'])
-    print(totalPairList)
-                    
+    # print(totalPairList)
                     # print(f"{mainPair},{firstBasePlace},{secondPair},{secondBasePlace},{elem['pair']},{thirdBasePlace}")
-    print(len(totalPairList))
-                    
+
+    totalPairList = list(dict.fromkeys(totalPairList))
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# functionOf3("first","0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0x172370d5Cd63279eFa6d502DAB29171933a610AF","1")
+functionOf3("first","0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0x172370d5Cd63279eFa6d502DAB29171933a610AF","1")
 
 
 def functionOf4(place,baseAddr,tokenAddr,dex):
@@ -93,3 +91,56 @@ def functionOf4(place,baseAddr,tokenAddr,dex):
 
 # functionOf4("first","0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0x2ed945Dc703D85c80225d95ABDe41cdeE14e1992","1")
                         
+
+
+
+def funcFor2(place,baseAddr,tokenAddr,dex):
+    array = []
+    result = []
+    newList = []
+    for one in allPairs:
+        if one["dex"] == dex and (one["token0"] == baseAddr or one["token0"] == tokenAddr) and (one["token1"] == baseAddr or one["token1"] == tokenAddr):
+            mainPair = one["pair"]
+            if one["token0"] == baseAddr:
+                basePlace = 0
+            else:
+                basePlace = 1
+            # print(mainPair)
+    
+        
+        elif one["dex"] != dex and (one["token0"] == baseAddr or one["token0"] == tokenAddr) and (one["token1"] == baseAddr or one["token1"] == tokenAddr):
+                if one["token0"] == tokenAddr:
+                    tokenAddrPlace = 0
+                elif one["token1"] == tokenAddr:
+                    tokenAddrPlace = 1
+                newList.append({"pair":one['pair'],"base":tokenAddrPlace})
+    
+    for item in newList:
+        # print(f"{mainPair},{basePlace},{item['pair']},{item['base']}")
+        result.append({"firstPair":mainPair,"firstBase":basePlace,"secondPair":item['pair'],"secondBase":item['base']})
+    print(result)
+    # print(newList)
+
+    # for elem in newList:
+        
+    #     if elem["token0"] == tokenAddr:
+    #         secondBase = elem["token1"]
+    #     else:
+    #         secondBase = elem["token0"]
+    #     secondPair = elem['pair']
+    #     if elem["token0"] == tokenAddr:
+    #             tokenPlace = 0
+    #     elif elem["token1"] == tokenAddr:
+    #         tokenPlace = 1
+    #     if place == "first":
+    #         # test = mainPair,basePlace,secondPair,tokenPlace
+    #         # print(test)
+    #         # result.append(test)
+    #         print(f"{mainPair},{basePlace},{secondPair},{tokenPlace}")
+    #     elif place == "last":
+    #         # test = mainPair,basePlace,secondPair,tokenPlace
+    #         # result.append(test)
+    # # return result
+    #         print(f"{mainPair},{basePlace},{secondPair},{tokenPlace}")
+
+funcFor2("first","0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0x172370d5Cd63279eFa6d502DAB29171933a610AF","1")
