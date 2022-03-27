@@ -9,18 +9,20 @@ def decodeReserve(input):
     return(rererve0, rererve1)
 
 
-def getReserve(allPairs):
-    allData = []
+def getReserve(tokenAdd):
+    finalResultD = []
     firstResult = []
     secondResult = []
     thirdResult = []
     ws = create_connection(
         "wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
+    data = polyList[tokenAdd]
+    
     # for one in allPairs:
 
     #     allData.append({"jsonrpc":"2.0","method":"eth_call","params":[{"to": one["pair"], "data":"0x0902f1ac"}, "latest"],"id":one["pair"][0:10]})
-    allData = ""
-    json_data = dumps(allData).encode("utf-8")
+    
+    json_data = dumps(data["request"]).encode("utf-8")
     ws.send(json_data)
 
     results = ws.recv()
@@ -29,7 +31,7 @@ def getReserve(allPairs):
     else:
         results = ws.recv()
         results = loads(results)
-    for item in allPairs:
+    for item in data["probabilities"]:
         for sOne in results:
             if item["firstPair"][0:10] == sOne["id"]:
                 reserve = decodeReserve(sOne["result"])
@@ -42,6 +44,7 @@ def getReserve(allPairs):
                 firstFee = item["firstFee"]
                 firstResult.append({"id": item["id"], "reserve": (
                     firstReserve0, firstReserve1), "fee": firstFee})
+                # print(firstResult)
                 # print(f"{item['id']},{firstReserve0,firstReserve1,firstFee},first")
 
             elif item["secondPair"][0:10] == sOne["id"]:
@@ -68,7 +71,7 @@ def getReserve(allPairs):
                         thirdReserve1 = reserve[0]
                     thirdFee = item["thirdFee"]
                     thirdResult.append({"id": item["id"], "reserve": (
-                        secondReserve0, secondReserve1), "fee": secondFee})
+                        thirdReserve0, thirdReserve1), "fee": thirdFee})
 
     if not thirdResult:
         for row in firstResult:
@@ -81,8 +84,19 @@ def getReserve(allPairs):
             for elem in secondResult:
                 for item in thirdResult:
                     if row["id"] == elem["id"] == item["id"]:
-                        print(
-                            f"{row['id']},{row['reserve'],row['fee']},{elem['reserve'],elem['fee']},{item['reserve'],item['fee']}")
+                        # return True
+                        finalResultD.append({"id":row['id'],"first":[row['reserve'],row['fee']],"second":[elem['reserve'],elem['fee']],"third":[item['reserve'],item['fee']]})
+                        # print(
+                        #     f"{row['id']},{row['reserve'],row['fee']},{elem['reserve'],elem['fee']},{item['reserve'],item['fee']}")
+                    if (type(row["id"]) == str and type(elem["id"]) == str) and (row["id"] == elem["id"]):
+                        finalResultD.append({"id":row['id'],"first":[row['reserve'],row['fee']],"second":[elem['reserve'],elem['fee']]})
+                        # print(
+                        # f"{row['id']},{row['reserve'],row['fee']},{elem['reserve'],elem['fee']}")
+    finalShit = []         
+    for i in finalResultD:
+        if i not in finalShit:
+            print(i)
+            finalShit.append(i)
 
-
-getReserve(allPairs)
+    # print(list(set.fromkeys(finalResultD)))
+getReserve("0x172370d5Cd63279eFa6d502DAB29171933a610AF")

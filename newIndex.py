@@ -128,15 +128,14 @@ def poly(place,baseAddr,tokenAddr,dex):
     request2,results2 = funcFor2(place,baseAddr,tokenAddr,dex)
     polyRequest = request3 + request2
     polyResults = results3 + results2
-    ws = create_connection("wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
-    json_data = dumps(polyRequest).encode("utf-8")
-    ws.send(json_data)
-    print(ws.recv())
+    # ws = create_connection("wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
+    # json_data = dumps(polyRequest).encode("utf-8")
+    # ws.send(json_data)
+    # print(ws.recv())
     returnedResult = {
         "request": polyRequest,
         "probabilities":polyResults
     }
-    
-
+    print(returnedResult)
 
 poly("first","0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0x172370d5Cd63279eFa6d502DAB29171933a610AF","1")
