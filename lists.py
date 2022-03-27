@@ -4,5 +4,5 @@ matic = {'request': [{'jsonrpc': '2.0', 'method': 'eth_call', 'params': [{'to': 
 'secondBase': 1, 'secondFee': '17'}, {'id': 3, 'firstPair': '0x634F9d9f8680349b518cb615017C105aF46CCFd2', 'firstBase': 0, 'firstFee': '23', 'secondPair': '0xfEC6F467B2eE93a0Bafb580784314A1001219581', 'secondBase': 1, 'secondFee': '35'}]}
 
 polyList = {
-    "0x172370d5Cd63279eFa6d502DAB29171933a610AF":matic
+    "0x172370d5Cd63279eFa6d502DAB29171933a610AF":matic,
 }
