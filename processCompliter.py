@@ -1,6 +1,7 @@
 from websocket import create_connection
 from json import loads,dumps
 from lists import polyList
+from calc import find_x_and_w,f
 
 def decodeReserve(input):
 
@@ -17,11 +18,10 @@ def getReserve(tokenAdd):
     ws = create_connection(
         "wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
     data = polyList[tokenAdd]
-    
-    # for one in allPairs:
 
+    # for one in allPairs:
     #     allData.append({"jsonrpc":"2.0","method":"eth_call","params":[{"to": one["pair"], "data":"0x0902f1ac"}, "latest"],"id":one["pair"][0:10]})
-    
+
     json_data = dumps(data["request"]).encode("utf-8")
     ws.send(json_data)
 
@@ -92,7 +92,7 @@ def getReserve(tokenAdd):
                         finalResultD.append({"id":row['id'],"first":[row['reserve'],row['fee']],"second":[elem['reserve'],elem['fee']]})
                         # print(
                         # f"{row['id']},{row['reserve'],row['fee']},{elem['reserve'],elem['fee']}")
-    finalShit = []         
+    finalShit = []
     for i in finalResultD:
         if i not in finalShit:
             print(i)
