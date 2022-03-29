@@ -15,7 +15,10 @@ def myFunc(e):
 
 
 
-def getReserve(tokenAdd):
+def getReserve(place,baseAddr,tokenAddr,dex,amountIn,amountOut):
+    tokenAdd = str(place) + str(baseAddr) + str(tokenAddr) + str(dex)
+    # print(tokenAddr)
+    # return True
     finalResultD = []
     firstResult = []
     secondResult = []
@@ -46,6 +49,9 @@ def getReserve(tokenAdd):
                 elif item["firstBase"] == 1:
                     firstReserve0 = reserve[1]
                     firstReserve1 = reserve[0]
+                if place == "first":
+                    firstReserve0 = firstReserve0 - amountOut
+                    firstReserve1 = firstReserve1 + amountIn
                 firstFee = item["firstFee"]
                 firstResult.append({"id": item["id"], "reserve": (
                     firstReserve0, firstReserve1), "fee": firstFee})
@@ -53,6 +59,7 @@ def getReserve(tokenAdd):
                 # print(f"{item['id']},{firstReserve0,firstReserve1,firstFee},first")
 
             elif item["secondPair"][0:10] == sOne["id"]:
+                print(len(item))
                 reserve = decodeReserve(sOne["result"])
                 if item["secondBase"] == 0:
                     secondReserve0 = reserve[0]
@@ -60,6 +67,9 @@ def getReserve(tokenAdd):
                 elif item["secondBase"] == 1:
                     secondReserve0 = reserve[1]
                     secondReserve1 = reserve[0]
+                if (len(item) == 7) and (place == "last"):
+                    thirdReserve0 = thirdReserve0 + amountIn
+                    thirdReserve1 = thirdReserve1 - amountOut
                 secondFee = item["secondFee"]
                 secondResult.append({"id": item["id"], "reserve": (
                     secondReserve0, secondReserve1), "fee": secondFee})
@@ -74,6 +84,9 @@ def getReserve(tokenAdd):
                     elif item["thirdBase"] == 1:
                         thirdReserve0 = reserve[1]
                         thirdReserve1 = reserve[0]
+                    if place == "last":
+                        thirdReserve0 = thirdReserve0 + amountIn
+                        thirdReserve1 = thirdReserve1 - amountOut
                     thirdFee = item["thirdFee"]
                     thirdResult.append({"id": item["id"], "reserve": (
                         thirdReserve0, thirdReserve1), "fee": thirdFee})
@@ -143,10 +156,11 @@ def getReserve(tokenAdd):
                     resulta = None
                 # print(resulta)
                 if resulta != None:
-                    probList.append({"id":i['id'],"x":resulta[0],"w":resulta[1]})
+                    if int(resulta[0]) > 0:
+                        probList.append({"id":i['id'],"x":int(resulta[0]),"w":int(resulta[1])})
             finalShit.append(i)
     # print(finalShit)
     probList.sort(reverse=True,key=myFunc)
     print(probList)
     # print(list(set.fromkeys(finalResultD)))
-getReserve("0x172370d5Cd63279eFa6d502DAB29171933a610AF")
+getReserve("first","0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0x172370d5Cd63279eFa6d502DAB29171933a610AF","1",437739,663834)
