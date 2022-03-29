@@ -5,7 +5,6 @@ from websocket import create_connection
 from lists import t_172370d5Cd63279eFa6d502DAB29171933a610AF, t_2ed945Dc703D85c80225d95ABDe41cdeE14e1992, pairs
 # from allPairs import allPairs
 
-
 def funcFor2(place, baseAddr, tokenAddr, dex):
     array = []
     result = []

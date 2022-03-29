@@ -53,6 +53,6 @@ def find_x_and_w(w_fn, verbose=True, **kwargs):
 # print("##### W1")
 # find_x_and_w(w1, A=11000, B=10000,fee1=12, C=10000, D=11500,fee2=24)
 
-print("\n##### W2")
-find_x_and_w(w2, A=11000, B=10000, fee1=5, C=10000,
-             D=9000, fee2=14, E=9200, F=12500, fee3=26)
+# print("\n##### W2")
+# find_x_and_w(w2, A=11000, B=10000, fee1=5, C=10000,
+#              D=9000, fee2=14, E=9200, F=12500, fee3=26)

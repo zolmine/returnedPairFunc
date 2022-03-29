@@ -1,7 +1,7 @@
 from websocket import create_connection
 from json import loads,dumps
 from lists import polyList
-from calc import find_x_and_w,f
+from calc import find_x_and_w,w1,w2
 
 def decodeReserve(input):
 
@@ -95,7 +95,16 @@ def getReserve(tokenAdd):
     finalShit = []
     for i in finalResultD:
         if i not in finalShit:
-            print(i)
+            if "third" in i:
+                # print(i["first"][0][0])
+                firstReserve0 = i["first"][0][0]
+                firstReserve1 = i["first"][0][1]
+                secondReserve0 = i['second'][0][0]
+                secondReserve1 = i['second'][0][1]
+                thirdReserve0 = i['third'][0]
+                print(firstReserve0,firstReserve1)
+                # find_x_and_w(w2, A=11000, B=10000, fee1=5, C=10000,
+                # D=9000, fee2=14, E=9200, F=12500, fee3=26)
             finalShit.append(i)
 
     # print(list(set.fromkeys(finalResultD)))
