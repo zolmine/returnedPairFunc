@@ -44,9 +44,9 @@ def find_x_and_w(w_fn, verbose=True, **kwargs):
     def f(x): return w_fn(X=x, **kwargs, verbose=False) * -1
     x = optimize.minimize_scalar(f, bounds=(0, None)).x
     w = w_fn(X=x, **kwargs, verbose=False)
-    # if verbose:
-    #     print("The value of x is", x)
-    #     print("The value of w is", w)
+    if verbose:
+        print("The value of x is", x)
+        print("The value of w is", w)
     return x, w
 
 
