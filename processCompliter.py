@@ -59,7 +59,6 @@ def getReserve(place,baseAddr,tokenAddr,dex,amountIn,amountOut):
                 # print(f"{item['id']},{firstReserve0,firstReserve1,firstFee},first")
 
             elif item["secondPair"][0:10] == sOne["id"]:
-                print(len(item))
                 reserve = decodeReserve(sOne["result"])
                 if item["secondBase"] == 0:
                     secondReserve0 = reserve[0]
