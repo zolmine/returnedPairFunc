@@ -8,6 +8,11 @@ def decodeReserve(input):
     rererve0 = int(input[2:66], 16)
     rererve1 = int(input[66:130], 16)
     return(rererve0, rererve1)
+def myFunc(e):
+  return (e['w'])
+
+
+
 
 
 def getReserve(tokenAdd):
@@ -16,7 +21,7 @@ def getReserve(tokenAdd):
     secondResult = []
     thirdResult = []
     ws = create_connection(
-        "wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
+        "wss://polygon-mainnet.g.alchemy.com/v2/p0Tqunv8aWA94L7Lqc_AKKJy0XDvlJV2")
     data = polyList[tokenAdd]
 
     # for one in allPairs:
@@ -91,21 +96,57 @@ def getReserve(tokenAdd):
                     if (type(row["id"]) == str and type(elem["id"]) == str) and (row["id"] == elem["id"]):
                         finalResultD.append({"id":row['id'],"first":[row['reserve'],row['fee']],"second":[elem['reserve'],elem['fee']]})
                         # print(
-                        # f"{row['id']},{row['reserve'],row['fee']},{elem['reserve'],elem['fee']}")
+                                # f"{row['id']},{row['reserve'],row['fee']},{elem['reserve'],elem['fee']}")
+    # print(finalResultD[6])                    
     finalShit = []
+    probList = []
     for i in finalResultD:
         if i not in finalShit:
             if "third" in i:
                 # print(i["first"][0][0])
                 firstReserve0 = i["first"][0][0]
                 firstReserve1 = i["first"][0][1]
+                firstFee = int(i['first'][1])
                 secondReserve0 = i['second'][0][0]
                 secondReserve1 = i['second'][0][1]
-                thirdReserve0 = i['third'][0]
-                print(firstReserve0,firstReserve1)
-                # find_x_and_w(w2, A=11000, B=10000, fee1=5, C=10000,
-                # D=9000, fee2=14, E=9200, F=12500, fee3=26)
-            finalShit.append(i)
+                secondFee = int(i['second'][1])
+                thirdReserve0 = i['third'][0][0]
+                thirdReserve1 = i['third'][0][1]
+                thirdFee = int(i['third'][1])
 
+                # print(firstFee)
+                # print(i)
+                # if i['id'] == 4:
+                #     print(firstReserve0,firstReserve1,secondReserve0,secondReserve1,thirdReserve0,thirdReserve1)
+                try:
+                    resulta = find_x_and_w(w2, A=firstReserve0, B=firstReserve1, fee1=firstFee, C=secondReserve0,
+                        D=secondReserve1, fee2=secondFee, E=thirdReserve0, F=thirdReserve1, fee3=thirdFee)
+                except:
+                    resulta = None
+                if resulta != None:
+                    if int(resulta[0]) > 0:
+                        probList.append({"id":i['id'],"x":int(resulta[0]),"w":int(resulta[1])})
+                # print(resulta)
+            else:
+
+                firstReserve0 = i["first"][0][0]
+                firstReserve1 = i["first"][0][1]
+                firstFee = int(i['first'][1])
+                secondReserve0 = i['second'][0][0]
+                secondReserve1 = i['second'][0][1]
+                secondFee = int(i['second'][1])
+                # print(firstReserve0,firstReserve1,secondReserve0,secondReserve1)
+                try:
+                    resulta = find_x_and_w(w1, A=firstReserve0, B=firstReserve1, fee1=firstFee, C=secondReserve0,
+                        D=secondReserve1, fee2=secondFee)
+                except:
+                    resulta = None
+                # print(resulta)
+                if resulta != None:
+                    probList.append({"id":i['id'],"x":resulta[0],"w":resulta[1]})
+            finalShit.append(i)
+    # print(finalShit)
+    probList.sort(reverse=True,key=myFunc)
+    print(probList)
     # print(list(set.fromkeys(finalResultD)))
 getReserve("0x172370d5Cd63279eFa6d502DAB29171933a610AF")

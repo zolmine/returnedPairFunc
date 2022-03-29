@@ -20,10 +20,10 @@ def w1(X, A, B, fee1, C, D, fee2, verbose=True):
     Y = y(X, B, A, fee1)
     Z = z(Y, D, C, fee2)
     W = Z - X
-    if verbose:
-        print("The value of y is", Y)
-        print("The value of z is", Z)
-        print("Value of w is", W)
+    # if verbose:
+    #     print("The value of y is", Y)
+    #     print("The value of z is", Z)
+    #     print("Value of w is", W)
     return W
 
 
@@ -32,11 +32,11 @@ def w2(X, A, B, fee1, C, D, fee2, E, F, fee3, verbose=True):
     Z = z(Y, D, C, fee2)
     U = u(Z, F, E, fee3)
     W = U - X
-    if verbose:
-        print("The value of y is", Y)
-        print("The value of z is", Z)
-        print("The value of u is", U)
-        print("Value of w is", W)
+    # if verbose:
+    #     print("The value of y is", Y)
+    #     print("The value of z is", Z)
+    #     print("The value of u is", U)
+    #     print("Value of w is", W)
     return W
 
 
@@ -44,9 +44,9 @@ def find_x_and_w(w_fn, verbose=True, **kwargs):
     def f(x): return w_fn(X=x, **kwargs, verbose=False) * -1
     x = optimize.minimize_scalar(f, bounds=(0, None)).x
     w = w_fn(X=x, **kwargs, verbose=False)
-    if verbose:
-        print("The value of x is", x)
-        print("The value of w is", w)
+    # if verbose:
+    #     print("The value of x is", x)
+    #     print("The value of w is", w)
     return x, w
 
 
