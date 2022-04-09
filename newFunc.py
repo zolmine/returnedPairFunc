@@ -39,8 +39,7 @@ def func2(toAdd,fromAdd):
                 secondBaseAdd = item['token0']
             firstFee = item['fee']
             usedPairs.append(item['pair'])
-            # print(secondBaseAdd)
-            # return True
+
             for item2 in pairsList:
                 if (secondBaseAdd == item2['token0'] or secondBaseAdd == item2['token1']) and (fromAdd == item2['token0'] or fromAdd == item2['token1']):
                     secondPair = item2['pair']
@@ -51,13 +50,11 @@ def func2(toAdd,fromAdd):
                     secondFee = item2['fee']
                     usedPairs.append(item2['pair'])
                     results.append({'firstPair':firstPair,'firstBase':firstBase, 'firstFee':firstFee,'secondPair':secondPair,'secondBase':secondBase, 'secondFee':secondFee})
-    # print(results)
     for elem in usedPairs:
         if elem not in filtredPairs:
             allData.append({"jsonrpc":"2.0","method":"eth_call","params":[{"to": elem, "data":"0x0902f1ac"}, "latest"],"id":elem[0:10]})
     ws = create_connection("wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
     ws.send(str(allData))
     print(ws.recv())
-    # print(filtredPairs)
 
 func2("0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683")
