@@ -1,19 +1,26 @@
-from websocket import create_connection
+from json import dump, load
 from allPairsWithOutreserve0AndBlacklist import allPairsWithOutreserve0AndBlacklist as pairsList
+from whitelist import whitelist
 
-# def func1(fromAdd,toAdd):
-    
-#     results = []
-#     for item in pairsList:
-#         if (fromAdd == item['token0'] or fromAdd == item['token1']) and (toAdd == item['token0'] or toAdd == item['token1']):
-#             if item['token0'] == fromAdd:
-#                 base = 0
-#             elif item['token1'] == fromAdd:
-#                 base = 1
-#             results.append({'pair':item['pair'],'base':base, 'fee':item['fee']})
-#     print(results)
-#     return results
 
+fromList = [
+    "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+    "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
+]
+
+def intoJsonFile(data):
+    loading = []
+    outfile = open('data.json', 'r')
+    try:
+        loading = load(outfile)
+    except:
+        loading = []
+    loading.append(data)
+    outfile = open('data.json', 'w')
+    dump(loading, outfile)
+    outfile.close()
 
 def func2(toAdd,fromAdd):
     usedPairs = []
@@ -53,8 +60,17 @@ def func2(toAdd,fromAdd):
     for elem in usedPairs:
         if elem not in filtredPairs:
             allData.append({"jsonrpc":"2.0","method":"eth_call","params":[{"to": elem, "data":"0x0902f1ac"}, "latest"],"id":elem[0:10]})
-    ws = create_connection("wss://speedy-nodes-nyc.moralis.io/02799b1f72329a0eefa3b741/polygon/mainnet/ws")
-    ws.send(str(allData))
-    print(ws.recv())
 
-func2("0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270","0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683")
+    finalResult = {fromAdd:{toAdd:{
+        'probability':results,
+        'request':allData
+    }}}
+    intoJsonFile(finalResult)
+
+def executer():
+    for item in whitelist:
+        if item not in fromList:
+            for item2 in fromList:
+                func2(item,item2)
+
+executer()
