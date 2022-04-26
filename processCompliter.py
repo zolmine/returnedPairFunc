@@ -1,7 +1,7 @@
 from websocket import create_connection
 from json import loads,dumps
-from lists import polyList
-from calc import find_x_and_w,w1,w2
+# from lists import polyList
+# from calc import find_x_and_w,w1,w2
 
 def decodeReserve(input):
 

@@ -1,5 +1,5 @@
 from numba import jit
-from newFunc import func2
+from executer import func2
 
 
 func2Compiled = jit(forceobj=True) (func2)
